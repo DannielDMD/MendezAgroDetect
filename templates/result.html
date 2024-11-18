@@ -1,14 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado</title>
+    <title>Resultado de la Predicción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .result-text {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .result-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .recommendations {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 1rem;
+            color: #4CAF50;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #45a049;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #777;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Resultado del Análisis</h1>
-    <img src="{{ result_image }}" alt="Imagen procesada">
-    <br>
-    <a href="/">Subir otra imagen</a>
+
+    <div class="container">
+        <h1>Resultado de la Predicción</h1>
+
+        <p class="result-text">
+            La planta tiene la enfermedad: <strong>{{ predicted_class }}</strong>
+        </p>
+
+        <img src="{{ result_image }}" alt="Resultado" class="result-image">
+
+        <!-- Recomendaciones para el tratamiento -->
+        <div class="recommendations">
+            <h2>Recomendaciones:</h2>
+            <p>
+                {% if predicted_class == "Healthy" %}
+                    La planta está saludable. Mantén buenas prácticas de riego y exposición al sol.
+                {% elif predicted_class == "Powdery" %}
+                    Se recomienda tratar la planta con fungicidas específicos para el mildiu en polvo y mejorar la ventilación.
+                {% elif predicted_class == "Rust" %}
+                    Se recomienda usar fungicidas adecuados para combatir la roya y podar las áreas infectadas.
+                {% else %}
+                    Se recomienda contactar a un experto para diagnóstico adicional.
+                {% endif %}
+            </p>
+        </div>
+
+        <a href="/">Subir otra imagen</a>
+
+        <div class="footer">
+            Proyecto de <strong>Bootcamp IA FullStack</strong> - Desarrollado por <strong>Daniel Estebán Méndez Díaz</strong><br>
+            <a href="https://github.com/DannielDMD" target="_blank">Visita mi GitHub</a>
+        </div>
+    </div>
+
 </body>
+
 </html>

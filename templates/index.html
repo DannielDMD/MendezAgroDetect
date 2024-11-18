@@ -1,15 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Imagen</title>
+    <title>MendezAgroDetect - Subir Imagen</title>
+    <style>
+        /* Asegurarnos que el body ocupe toda la altura de la ventana */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Usamos flexbox para centrar */
+            justify-content: center; /* Centrado horizontal */
+            align-items: center; /* Centrado vertical */
+            height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .image-upload {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload:hover {
+            background-color: #f1f1f1;
+            border-color: #2e8b57;
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .image-upload label {
+            font-size: 1.2rem;
+            color: #4CAF50;
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .buttons button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #45a049;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #777;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mensajes */
+        .message {
+            font-size: 1rem;
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .image-status {
+            font-size: 1rem;
+            color: #2ecc71;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Sube una imagen para analizar</h1>
-    <form action="/predict" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" required>
-        <button type="submit">Enviar</button>
-    </form>
+
+    <div class="container">
+        <h1>MendezAgroDetect</h1>
+        <h2>Sube una imagen de tu planta para predecir su enfermedad</h2>
+
+        <form id="uploadForm" action="/predict" method="POST" enctype="multipart/form-data">
+            <!-- Cuadro de carga de imagen -->
+            <div class="image-upload">
+                <label for="image">Haz clic para seleccionar una imagen</label>
+                <input type="file" id="image" name="image" required>
+            </div>
+
+            <!-- Mensajes -->
+            <div id="imageMessage" class="message"></div>
+            <div id="imageStatus" class="image-status"></div>
+
+            <!-- Botones de subir y procesar -->
+            <div class="buttons">
+                <button type="reset" onclick="clearImage()">Limpiar</button>
+                <button type="submit">Predecir</button>
+            </div>
+        </form>
+
+        <!-- Footer -->
+        <div class="footer">
+            Proyecto de <strong>Bootcamp IA FullStack</strong> - Desarrollado por <strong>Daniel Estebán Méndez Díaz</strong><br>
+            <a href="https://github.com/DannielDMD" target="_blank">Visita mi GitHub</a>
+        </div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const imageInput = document.getElementById('image');
+        const imageMessage = document.getElementById('imageMessage');
+        const imageStatus = document.getElementById('imageStatus');
+
+        // Validar al hacer clic en "Predecir"
+        uploadForm.addEventListener('submit', function (event) {
+            if (!imageInput.files.length) {
+                event.preventDefault(); // Evita el envío si no hay imagen seleccionada
+                imageMessage.textContent = 'Por favor, selecciona una imagen antes de predecir.';
+                imageMessage.style.color = '#e74c3c';
+            }
+        });
+
+        // Mostrar mensaje cuando se sube la imagen
+        imageInput.addEventListener('change', function () {
+            if (imageInput.files.length > 0) {
+                imageMessage.textContent = ''; // Limpiar mensaje de error
+                imageStatus.textContent = 'Imagen seleccionada: ' + imageInput.files[0].name;
+                imageStatus.style.color = '#2ecc71'; // Mensaje de éxito
+            }
+        });
+
+        // Limpiar la imagen y los mensajes
+        function clearImage() {
+            imageInput.value = ''; // Limpiar input
+            imageMessage.textContent = ''; // Limpiar mensaje de error
+            imageStatus.textContent = ''; // Limpiar mensaje de éxito
+        }
+    </script>
+
 </body>
+
 </html>

@@ -1,0 +1,17 @@
+# Ignorar archivos de entornos virtuales
+venv/
+
+# Ignorar archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar archivos de configuración del IDE
+.idea/
+.vscode/
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+
+# Ignorar archivos de log
+*.log
