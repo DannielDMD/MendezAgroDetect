@@ -3,3 +3,4 @@ tensorflow
 numpy
 opencv-python
 Pillow
+gunicorn==23.0.0
