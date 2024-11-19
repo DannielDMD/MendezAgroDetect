@@ -8,6 +8,12 @@ import cv2
 # Inicializar la aplicación Flask y configurar la carpeta de archivos estáticos
 app = Flask(__name__, static_folder='uploads')  # Esta es la línea que debes agregar
 
+# Asegurarse de que la carpeta 'uploads' exista
+upload_folder = 'uploads'
+if not os.path.exists(upload_folder):
+    os.makedirs(upload_folder)  # Crear la carpeta si no existe
+
+
 # Cargar el modelo de TensorFlow
 model = load_model('model.h5')  # Asegúrate de que 'model.h5' esté en el mismo directorio o la ruta correcta
 
@@ -53,7 +59,7 @@ def predict():
             recommendation = get_recommendation(predicted_class)
 
             # Guardar o mostrar el resultado (esto es opcional, pero puede ser útil para mostrar la imagen procesada)
-            result_filepath = os.path.join('uploads', 'result_' + file.filename)
+            result_filepath = os.path.join(upload_folder, 'result_' + file.filename)
             img.save(result_filepath)  # Guardamos la imagen subida como resultado
 
             # Mostrar el resultado en el template
